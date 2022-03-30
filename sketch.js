@@ -4,6 +4,7 @@ var groundImage;
 function preload(){
   trex_running = loadAnimation("trex1.png","trex3.png","trex4.png");
   groundImage = loadImage("ground2.png");
+  cloudImage = loadImage ("cloud.png");
 }
 
 function setup(){
@@ -24,6 +25,9 @@ function setup(){
   ground=createSprite(200,180,400,20);
   ground.addImage("ground", groundImage);
   ground.x=ground.width/2;
+
+  var ran = Math.round(random(10,60));
+  console.log(ran);
 }
 
 
@@ -31,6 +35,7 @@ function draw(){
   //set background color 
   background("white");
   ground.velocityX=-2;
+  console.log(trex.y);
   if (ground.x<0){
     ground.x=ground.width/2;
   }
@@ -48,6 +53,21 @@ function draw(){
   
   //stop trex from falling down
   trex.collide(invisibleGround);
-  
+  spawnClouds();
+
   drawSprites();
+}
+
+function spawnClouds(){
+  if(frameCount%60 === 0){
+  cloud = createSprite(600,100,40,10);
+  cloud.addImage(cloudImage);
+  cloud.y = Math.round(random(10,60));
+  cloud.scale = 0.4;
+  cloud.velocityX = -3;
+  console.log(trex.depth);
+  console.log(cloud.depth);
+  cloud.depth = trex.depth;
+  trex.depth = trex.depth + 1;
+  }
 }
